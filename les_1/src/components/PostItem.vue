@@ -1,26 +1,17 @@
 <template>
-	<li class="post">
-		<div><strong>Название:</strong>{{ post.title }}</div>
-		<div><strong>Описание:</strong>{{ post.body }}</div>
-	</li>
+	<div>
+
+	</div>
 </template>
 
 <script>
 export default {
-	props: {
-		post: {
-			type: Object,
-			required: true
-		}
-	}
+	data() {
 
+
+		return {}
+	}
 }
 </script>
 
-<style scoped>
-.post {
-	padding: 15px;
-	margin-top: 15px;
-	border: 2px solid teal;
-}
-</style>
+<style scoped></style>

@@ -1,5 +1,5 @@
 {
-  "name": " les_1",
+  "name": "les_1",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },

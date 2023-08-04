@@ -1,34 +1,44 @@
 <template>
-	<div>
-		<h3 class="title">Список пользователей</h3>
-		<ul class="post__list">
-			<PostItem v-for="post in posts" :post="post" />
+	<section>
+		<h2 class="posts">Список постов:</h2>
+		<ul class="posts_list" v-if="posts.length > 0">
+			<li class="post_item" v-for="post in posts">
+				<div class="post_content">
+					<p>Наименование: {{ post.title }}</p>
+					<p>Описание: {{ post.body }}</p>
+				</div>
+				<button @click="$emit('remove', post)">Удалить</button>
+			</li>
 		</ul>
-	</div>
+		<div class="empty_message" v-else>
+			<p>список пуст</p>
+		</div>
+	</section>
 </template>
 
 <script>
-import PostItem from '@/components/PostItem.vue';
 export default {
-	components: {
-		PostItem
-	},
 	props: {
 		posts: {
 			type: Array,
 			required: true
 		}
 	}
-
 }
 </script>
 
 <style scoped>
-.title {
-	margin-top: 30px;
+.post_item {
+	margin-bottom: 20px;
+	padding: 4px 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border: 2px solid var(--brand);
+	border-radius: 4px;
 }
 
-.post__list {
-	margin-top: 30px;
+.empty_message {
+	color: var(--error);
 }
 </style>
