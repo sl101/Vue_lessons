@@ -1,9 +1,9 @@
 <template>
 	<form class="form" @submit.prevent>
-		<h2 class="title">Create user</h2>
-		<CustomInput type="text" v-model="post.title" placeholder="Title" />
-		<CustomInput type="text" v-model="post.body" placeholder="Summary" />
-		<CustomButton @click="createPost" text="Add user" />
+		<h2>Создание поста</h2>
+		<CustomInput v-model="post.title" type="text" placeholder="Название" />
+		<CustomInput v-model="post.body" type="text" placeholder="Описание" />
+		<CustomButton @click="createPost"> Создать пост</CustomButton>
 	</form>
 </template>
 
@@ -15,13 +15,11 @@ export default {
 				title: '',
 				body: ''
 			},
-			btn: "Send",
 		}
 	},
 	methods: {
 		createPost() {
 			if (this.post.title && this.post.body) {
-
 				this.post.id = Date.now();
 				this.$emit('create', this.post);
 				this.post = {
@@ -30,16 +28,16 @@ export default {
 				}
 			}
 		}
-	}
+	},
 }
 </script>
 
-<style>
+<style  scoped>
 .form {
-	margin-top: 20px;
-	max-width: 300px;
 	display: flex;
-	flex-direction: column;
 	gap: 20px;
+	flex-direction: column;
+	justify-content: space-between;
+
 }
 </style>

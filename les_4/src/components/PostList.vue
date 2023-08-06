@@ -1,34 +1,22 @@
 <template>
-	<ul class="posts" v-if="posts.length > 0">
-		<h2 class="title">Users list</h2>
-		<PostItem v-for="post in posts" :post="post" :key="post.id" @remove="$emit('remove', post)" />
+	<h2>Список постов</h2>
+	<ul>
+		<PostItem v-for="post in posts" :post="post" @remove="$emit('remove', post)" :key="post.id" />
 	</ul>
-	<div v-else>
-		<h2 class="title" style="color: var(--red)">Post list is empty</h2>
-	</div>
 </template>
 
 <script>
-import PostItem from '@/components/PostItem.vue';
+import PostItem from './PostItem.vue';
+
 export default {
-	components: {
-		PostItem
-	},
+	components: { PostItem },
 	props: {
 		posts: {
 			type: Array,
-			required: true,
-		}
+			required: true
+		},
 	}
-
 }
 </script>
 
-<style >
-.posts {
-	margin-top: 30px;
-	display: flex;
-	flex-direction: column;
-	gap: 25px;
-}
-</style>
+<style lang="scss" scoped></style>

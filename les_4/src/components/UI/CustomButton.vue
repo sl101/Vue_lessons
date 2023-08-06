@@ -1,37 +1,23 @@
 <template>
-	<button class="button">{{ text }}</button>
+	<button class="btn">
+		<slot></slot>
+	</button>
 </template>
 
 <script>
 export default {
-	name: 'CustomButton',
-	props: {
-		text: String,
-		required: true
-	}
+	name: "CustomButton"
+
 }
 </script>
 
 <style scoped>
-.button {
-	position: relative;
-	padding: 6px 15px;
+.btn {
+	padding: 6px 12px;
 	font-weight: 600;
-	border: 1px solid var(--teal);
+	border: 1px solid var(--accent);
 	border-radius: 4px;
-	background: none;
-	color: var(--teal);
 	text-transform: uppercase;
-	cursor: pointer;
-	transition: background-color var(--transition), color var(--transition);
-}
-
-.button:hover {
-	background-color: var(--teal);
-	color: var(--white)
-}
-
-.button:active {
-	top: 1px
+	background-color: transparent;
 }
 </style>

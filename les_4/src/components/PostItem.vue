@@ -1,10 +1,10 @@
 <template>
 	<li class="post">
-		<div class="post__content">
-			<p>{{ post.title }}</p>
-			<p>{{ post.body }}</p>
+		<div class="post_content">
+			<p>Название: {{ post.title }}</p>
+			<p>Описание: {{ post.body }}</p>
 		</div>
-		<CustomButton @click="$emit('remove', post)" text="Delete" />
+		<CustomButton @click="$emit('remove', post)">Удалить</CustomButton>
 	</li>
 </template>
 
@@ -15,32 +15,19 @@ export default {
 			type: Object,
 			required: true
 		}
-	},
-	//methods: {
-	//	removePost() {
-	//		console.log(this.post.id);
-	//	}
-	//}
+	}
 }
 </script>
 
-<style>
+<style scoped>
 .post {
-	padding: 8px 15px;
+	padding: 10px;
+	margin: 20px 0;
+	border: 2px solid var(--accent);
+	border-radius: 6px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	gap: 50px;
-	border: 2px solid teal;
-}
-
-.post__content {
-	display: flex;
-	gap: 20px;
-	align-items: center;
-}
-
-.button {
-	padding: 4px 15px;
 }
 </style>
