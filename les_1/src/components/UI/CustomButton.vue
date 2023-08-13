@@ -13,7 +13,6 @@ export default {
 <style  scoped>
 .btn {
 	padding: 6px 15px;
-	align-self: end;
 	border: 1px solid var(--brand);
 	border-radius: 4px;
 	cursor: pointer;

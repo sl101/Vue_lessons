@@ -2,14 +2,16 @@
 	<div class="container">
 		<div class="app">
 			<h1>Страница с постами</h1>
-			<!--<CustomButton @click="fetchPosts" style="margin: 20px 0;">Get Posts</CustomButton>-->
-			<CustomButton @click="showDialog" style="margin: 20px 0;">Создать пост</CustomButton>
-
+			<CustomInput class="search" v-model="searchQuery" placeholder="search" />
+			<div class="app_top">
+				<CustomButton @click="showDialog">Создать пост</CustomButton>
+				<CustomSelect v-model="selectedSort" :options="options" />
+			</div>
 			<CustomDialog v-model:show="dialogVisible">
 				<PostForm @create="addPost" />
 			</CustomDialog>
 
-			<PostList :posts="posts" @remove="removePost" v-if="!isPostsLoading" />
+			<PostList :posts="sortAndSearchPostByTitle" @remove="removePost" v-if="!isPostsLoading" />
 			<div v-else>Идет загрузка...</div>
 		</div>
 	</div>
@@ -26,7 +28,13 @@ export default {
 		return {
 			posts: [],
 			dialogVisible: false,
-			isPostsLoading: false
+			isPostsLoading: false,
+			selectedSort: '',
+			searchQuery: '',
+			options: [
+				{ id: 1, value: 'title', name: "По наименованию" },
+				{ id: 2, value: 'body', name: "По описанию" }
+			]
 		}
 	},
 	methods: {
@@ -43,12 +51,8 @@ export default {
 		async fetchPosts() {
 			try {
 				this.isPostsLoading = true;
-				//setTimeout(async () => {
 				const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
-				//console.log(response.data);
 				this.posts = response.data;
-				//this.isPostsLoading = false;
-				//}, 1000)
 			} catch (error) {
 				alert("Ошибка!")
 			} finally {
@@ -58,6 +62,21 @@ export default {
 	},
 	mounted() {
 		this.fetchPosts();
+	},
+	//watch: {
+	//	selectedSort(newValue) {
+	//this.posts.sort((post1, post2) => {
+	//return post1[newValue]?.localeCompare(post2[newValue]);
+	//})
+	//	}
+	//},
+	computed: {
+		sortedPosts() {
+			return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]))
+		},
+		sortAndSearchPostByTitle() {
+			return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
+		}
 	}
 }
 </script>
@@ -72,5 +91,19 @@ export default {
 
 .app {
 	padding: 50px 0;
+}
+
+.search {
+	margin-top: 20px;
+	max-width: 500px;
+	width: 100%;
+}
+
+.app_top {
+	margin: 20px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 50px;
 }
 </style>

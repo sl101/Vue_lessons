@@ -4,7 +4,7 @@
 		<div class="form__content">
 			<CustomInput v-model="post.title" type="text" placeholder="Наименование: " />
 			<CustomInput v-model="post.body" type="text" placeholder="Описание: " />
-			<CustomButton @click="createPost">Добавить</CustomButton>
+			<CustomButton @click="createPost" style="align-self: end;">Добавить</CustomButton>
 		</div>
 	</form>
 </template>
