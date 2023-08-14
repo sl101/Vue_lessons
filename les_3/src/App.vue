@@ -15,7 +15,7 @@
 						<div class="max-w-xs">
 							<label
 								for="wallet"
-								class="block text-s m font-medium text-gray-700"
+								class="block text-s m font-medium text-gray-700 cursor-pointer"
 								>Тикер</label
 							>
 							<div class="mt-1 relative rounded-md shadow-md">
@@ -68,11 +68,46 @@
 				</form>
 			</section>
 
+			<hr class="w-full border-t border-gray-600 my-4" />
+
+			<div class="flex justify-between">
+				<div class="max-w-xs">
+					<label
+						for="filter"
+						class="block text-s m font-medium text-gray-700 cursor-pointer"
+						>Фильтр</label
+					>
+					<div class="mt-1 relative rounded-md shadow-md">
+						<input
+							v-model="filter"
+							type="text"
+							name="filter"
+							id="filter"
+							class="block w-full pr-10 border-gray-300 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-md"
+						/>
+					</div>
+				</div>
+				<div class="max-w-xs flex gap-2 ">
+					<button
+						type="submit"
+						class="mt-8 inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+					>
+						Назад
+					</button>
+					<button
+						type="submit"
+						class="mt-8 inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+					>
+						Вперед
+					</button>
+				</div>
+			</div>
+
 			<template v-if="tickers.length">
 				<hr class="w-full border-t border-gray-600 my-4" />
 				<dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
 					<div
-						v-for="(t_item, index) in tickers"
+						v-for="(t_item, index) in filteredTickers()"
 						:key="index"
 						@click.stop="graph_title = t_item"
 						:class="{
@@ -116,122 +151,6 @@
 					</div>
 				</dl>
 
-				<!--<div
-          class="bg-white overflow-hidden shadow rounded-lg border-purple-800 border-solid cursor-pointer"
-        >
-          <div class="px-4 py-5 sm:p-6 text-center">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              WTF - USD
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-gray-900">
-              1.11
-            </dd>
-          </div>
-          <div class="w-full border-t border-gray-200"></div>
-          <button
-            class="flex items-center justify-center font-medium w-full bg-gray-100 px-4 py-4 sm:px-6 text-md text-gray-500 hover:text-gray-600 hover:bg-gray-200 hover:opacity-20 transition-all focus:outline-none"
-          >
-            <svg
-              class="h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="#718096"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clip-rule="evenodd"
-              ></path></svg>Удалить
-          </button>
-        </div>
-        <div
-          class="bg-white overflow-hidden shadow rounded-lg border-purple-800 border-solid border-4 cursor-pointer"
-        >
-          <div class="px-4 py-5 sm:p-6 text-center">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              VUE - RUB
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-gray-900">
-              80000.00
-            </dd>
-          </div>
-          <div class="w-full border-t border-gray-200"></div>
-          <button
-            class="flex items-center justify-center font-medium w-full bg-gray-100 px-4 py-4 sm:px-6 text-md text-gray-500 hover:text-gray-600 hover:bg-gray-200 hover:opacity-20 transition-all focus:outline-none"
-          >
-            <svg
-              class="h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="#718096"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clip-rule="evenodd"
-              ></path></svg>Удалить
-          </button>
-        </div>
-        <div
-          class="bg-white overflow-hidden shadow rounded-lg border-purple-800 border-solid cursor-pointer"
-        >
-          <div class="px-4 py-5 sm:p-6 text-center">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              BTC - USD
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-gray-900">
-              99999.99
-            </dd>
-          </div>
-          <div class="w-full border-t border-gray-200"></div>
-          <button
-            class="flex items-center justify-center font-medium w-full bg-gray-100 px-4 py-4 sm:px-6 text-md text-gray-500 hover:text-gray-600 hover:bg-gray-200 hover:opacity-20 transition-all focus:outline-none"
-          >
-            <svg
-              class="h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="#718096"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clip-rule="evenodd"
-              ></path></svg>Удалить
-          </button>
-        </div>
-        <div
-          class="bg-white overflow-hidden shadow rounded-lg border-purple-800 border-solid cursor-pointer"
-        >
-          <div class="px-4 py-5 sm:p-6 text-center">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              DOGE - USD
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-gray-900">
-              0.0014
-            </dd>
-          </div>
-          <div class="w-full border-t border-gray-200"></div>
-          <button
-            class="flex items-center justify-center font-medium w-full bg-gray-100 px-4 py-4 sm:px-6 text-md text-gray-500 hover:text-gray-600 hover:bg-gray-200 hover:opacity-20 transition-all focus:outline-none"
-          >
-            <svg
-              class="h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="#718096"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clip-rule="evenodd"
-              ></path></svg>Удалить
-          </button>
-        </div>-->
 				<hr class="w-full border-t border-gray-600 my-4" />
 			</template>
 			<section v-if="graph_title" class="relative">
@@ -285,25 +204,35 @@ export default {
 		return {
 			ticker: "",
 			tickers: [],
+
 			graph_title: null,
 			graph: [],
 			coins: [],
 			coins_names: [],
 			coins_show: false,
 			ticker_exists: false,
+			page: 1,
+			filter: "",
 		};
 	},
 	methods: {
+		filteredTickers(){
+			return this.tickers.filter(item=> item.Symbol.toLowerCase().includes(this.filter.toLowerCase()))
+		},
 		add() {
 			if (this.ticker) {
-				if (!this.checkTickers(this.ticker)) {
+				if (!this.checkTickers()) {
 					const newTicker = {
-						Symbol: this.ticker,
+						Symbol: this.ticker.toUpperCase(),
 						value: "",
 					};
 
 					this.tickers.push(newTicker);
-					this.fetchGraphData(newTicker);
+					this.filter = ''
+
+					localStorage.setItem("coins", JSON.stringify(this.tickers));
+
+					this.getCoinPrice(newTicker.Symbol);
 					this.coins_show = false;
 					this.ticker = "";
 				}
@@ -311,15 +240,19 @@ export default {
 		},
 		remove(name) {
 			this.tickers = this.tickers.filter((elem) => elem.Symbol !== name);
+			localStorage.setItem("coins", JSON.stringify(this.tickers));
 			if (this.graph_title?.Symbol === name) {
 				this.graph_title = null;
 			}
 		},
 
-		checkTickers(title) {
+		checkTickers() {
 			const tickers_names = this.tickers.map((item) => item.Symbol);
-
-			if (tickers_names.some((elem) => elem === title)) {
+			if (
+				tickers_names.some(
+					(elem) => elem.toLowerCase() === this.ticker.toLowerCase()
+				)
+			) {
 				this.ticker_exists = true;
 				return true;
 			} else {
@@ -332,19 +265,18 @@ export default {
 			this.ticker = symbol;
 		},
 
-		fetchGraphData(newTicker) {
+		getCoinPrice(symbol) {
 			setInterval(async () => {
 				try {
 					const response = await axios(
-						`https://min-api.cryptocompare.com/data/price?fsym=${newTicker.Symbol}&tsyms=USD&api_key=5fe26ca8e9e8c0b1924366055147015e23c2e8ccf981f43c5dcd35bf81baa252`
+						`https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=USD&api_key=5fe26ca8e9e8c0b1924366055147015e23c2e8ccf981f43c5dcd35bf81baa252`
 					);
 					const value =
 						response.data.USD > 1
 							? response.data.USD.toFixed(2)
 							: response.data.USD.toPrecision(2);
 
-					this.tickers.find((item) => item.Symbol === newTicker.Symbol).value =
-						value;
+					this.tickers.find((item) => item.Symbol === symbol).value = value;
 				} catch (error) {
 					console.log(error);
 				}
@@ -381,8 +313,27 @@ export default {
 			}
 		},
 	},
+
+	watch: {
+		ticker() {
+			if (this.ticker) {
+				this.coins_show = true;
+				this.checkTickers();
+			}
+		},
+	},
+
 	mounted() {
 		this.fetchCoinsList();
+	},
+	created() {
+		const tickersData = localStorage.getItem("coins");
+		if (tickersData) {
+			this.tickers = JSON.parse(tickersData);
+			this.tickers.forEach((element) => {
+				this.getCoinPrice(element.Symbol);
+			});
+		}
 	},
 };
 </script>
